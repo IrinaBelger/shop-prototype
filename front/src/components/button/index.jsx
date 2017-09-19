@@ -5,7 +5,7 @@ import ContentAdd from './../../../node_modules/material-ui/svg-icons/content/ad
 function IconButton() {
     return (
         <FloatingActionButton
-            backgroundColor="#6b6b99"
+            backgroundColor="#2BB2AC"
             className="fixedButton" >
             <ContentAdd />
         </FloatingActionButton>

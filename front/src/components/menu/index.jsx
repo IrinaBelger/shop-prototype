@@ -6,7 +6,7 @@ import IconButton from './../../../node_modules/material-ui/IconButton';
 import MoreVertIcon from './../../../node_modules/material-ui/svg-icons/navigation/more-vert';
 
 const iconStyle = {
-    color: "#9e9e9e",
+    color: "#B2B2B2",
     width: 40,
     height: 40,
 };

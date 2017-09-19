@@ -5,16 +5,16 @@ import TextField from './../../../node_modules/material-ui/TextField';
 const iconStyles = {
     width: 40,
     height: 40,
-    color: "#b3bbcb"
+    color: "#B2B2B2"
 };
 const textFieldStyle = {
-    color: "#6b6b99",
-    borderColor: "#b3bbcb",
+    color: "#B2B2B2",
+    borderColor: "#B2B2B2",
     width: 340
 };
 const textFieldStyleFocused = {
-    color: "#6b6b99",
-    borderColor: "#6b6b99",
+    color: "#38466E",
+    borderColor: "#38466E",
 };
 const SearchIcon = (props) => (
         <SvgIcon onClick={props.onClick} {...props}>

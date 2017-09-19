@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import Products from '../../components/products';
 import IconButton from '../../components/button';
 
 class Content extends Component {
@@ -10,7 +10,7 @@ class Content extends Component {
     render() {
         return (
             <div className="content">
-                content
+                <Products />
                 <IconButton />
             </div>
         );
