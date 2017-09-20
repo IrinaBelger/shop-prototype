@@ -26,7 +26,6 @@ class Header extends Component {
                 <NavMenu />
                 <Search onClick={ () => this.openSearch() }
                         className={searchClass}/>
-                <NavMenu />
             </div>
         );
     }

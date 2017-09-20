@@ -15,10 +15,13 @@ const BasketIcon = (props) => (
 function Card() {
     return (
         <div className="avatar clearfix">
-            <img className="preview" src={avatar} alt=""/>
+            <div className="avatar_img">
+                <img className="preview" src={avatar} alt=""/>
+            </div>
             <span>Trevor Reyes</span>
             <div className="basket-icon">
                 <BasketIcon />
+                <div className="basket-count">3</div>
             </div>
 
         </div>
