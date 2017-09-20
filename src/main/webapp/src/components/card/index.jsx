@@ -1,5 +1,5 @@
 import React from 'react';
-import avatar from '../../images/avatar.png';
+import avatar from './../../images/avatar.png';
 import SvgIcon from './../../../node_modules/material-ui/SvgIcon';
 
 const BasketIcon = (props) => (
