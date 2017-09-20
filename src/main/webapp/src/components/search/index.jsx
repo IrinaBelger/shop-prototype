@@ -13,8 +13,8 @@ const textFieldStyle = {
     width: 340
 };
 const textFieldStyleFocused = {
-    color: "#38466E",
-    borderColor: "#38466E",
+    color: "#2BB2AC",
+    borderColor: "#2BB2AC",
 };
 const SearchIcon = (props) => (
     <SvgIcon onClick={props.onClick} {...props}>

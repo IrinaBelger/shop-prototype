@@ -58,7 +58,7 @@
   padding: 12px 2px!important;
 }
 .edit-menu svg:hover {
-  fill: #38466E!important;
+  fill: #2BB2AC!important;
 }
 .search {
   display: block;
@@ -82,7 +82,7 @@
   display: block!important;
 }
 .search svg:hover {
-  fill: #38466E!important;
+  fill: #2BB2AC!important;
 }
 /*sidebar*/
 .avatar {
@@ -145,7 +145,7 @@
 
 }
 .basket-icon svg:hover * {
-  fill: #38466E!important;
+  fill: #2BB2AC!important;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .basket-count {
@@ -221,4 +221,8 @@
 }
 .product:hover div,.bye.active div {
   opacity: 1;
+}
+.detail-card-img {
+  float: left;
+  margin-right: 20px;
 }
