@@ -14,7 +14,7 @@ class ListView extends React.Component {
     }
 
     getCategoriesList() {
-        axios.get('http://localhost:8080/product-category',
+        axios.get('http://localhost:8080/product-category/map',
             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
             this.setCategoriesListState(response);
 
@@ -27,7 +27,6 @@ class ListView extends React.Component {
             categories: categories.data
         });
         this.render();
-        this.forceUpdate();
     }
 
     componentWillMount() {
@@ -42,7 +41,17 @@ class ListView extends React.Component {
                     <button className="iconButton" onClick={this.state.onClick}>+</button>
                 </div>
                 <List>
-                    {this.state.categories.map(c => <ListItem primaryText={c.name} key={c.id}/>)}
+                    {
+                        Object.keys(this.state.categories).map((c) =>
+                            <ListItem primaryText={c} key={c}
+                                      initiallyOpen={false} primaryTogglesNestedList={this.state.categories[c]}
+                                      nestedItems={this.state.categories[c].map(p=> <ListItem
+                                                                      key={p.id}
+                                                                      primaryText={p.name}
+                                                                    />)}
+
+                            />)
+                    }
                 </List>
             </div>
         );
