@@ -5,6 +5,7 @@ import IconButton from '../../components/button';
 import Home from '../home'
 import Basket from '../basket'
 import { Route, Switch } from 'react-router-dom'
+import Products from '../../components/products';
 
 class Content extends Component {
     // constructor(props) {
@@ -13,6 +14,7 @@ class Content extends Component {
     render() {
         return (
             <div className="content">
+                <Products />
                 <Switch>
                     <Route exact path='/' component={Home}/>
                     <Route path='/basket' component={Basket}/>

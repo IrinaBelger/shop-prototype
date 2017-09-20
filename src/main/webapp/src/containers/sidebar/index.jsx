@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Card from '../../components/card';
-
+import ListView from '../../components/listView';
 
 class SideBar extends Component {
     // constructor(props) {
@@ -10,12 +9,7 @@ class SideBar extends Component {
     render() {
         return (
             <div className="sidebar">
-                <Card  />
-                <ul>
-                    {this.props.list.map(function(listValue){
-                        return <li>Муму #{listValue}</li>;
-                    })}
-                </ul>
+                <ListView />
             </div>
         );
     }
