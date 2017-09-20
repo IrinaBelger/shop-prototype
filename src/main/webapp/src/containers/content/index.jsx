@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import IconButton from '../../components/button';
+import Home from '../home'
+import Basket from '../basket'
+import { Route, Switch } from 'react-router-dom'
 
 class Content extends Component {
     // constructor(props) {
@@ -10,7 +13,10 @@ class Content extends Component {
     render() {
         return (
             <div className="content">
-                content
+                <Switch>
+                    <Route exact path='/' component={Home}/>
+                    <Route path='/basket' component={Basket}/>
+                </Switch>
                 <IconButton />
             </div>
         );

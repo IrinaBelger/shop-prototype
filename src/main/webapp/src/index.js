@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { HashRouter } from 'react-router-dom';
 
 import MuiThemeProvider from '../node_modules/material-ui/styles/MuiThemeProvider';
 import reducer from './reducers';
@@ -18,9 +19,12 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 const Component = () => (
     <Provider store={store}>
         <MuiThemeProvider>
-            <App/>
+                <HashRouter>
+                    <App/>
+                </HashRouter>
         </MuiThemeProvider>
     </Provider>
 );
+
 ReactDOM.render(<Component />, document.getElementById('root'));
 registerServiceWorker();

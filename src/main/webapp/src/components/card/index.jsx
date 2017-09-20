@@ -1,6 +1,7 @@
 import React from 'react';
 import avatar from './../../images/avatar.png';
 import SvgIcon from './../../../node_modules/material-ui/SvgIcon';
+import { Link } from 'react-router-dom'
 
 const BasketIcon = (props) => (
     <SvgIcon>
@@ -15,6 +16,7 @@ function Card() {
             <img className="preview" src={avatar} alt=""/>
             <span>Trevor Reyes</span>
             <div className="basket-icon">
+                <Link to='/basket'>Roster</Link>
                 <BasketIcon />
             </div>
 
