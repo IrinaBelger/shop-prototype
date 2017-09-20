@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import Basket from '../../components/basket';
 import IconButton from '../../components/button';
 
-function Basket() {
+function BasketPage() {
     return (
-        <div >
-            Basket page
-        </div>
+        <Basket />
 
     );
 }
-export default Basket;
+export default BasketPage;

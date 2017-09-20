@@ -11,11 +11,11 @@ function CardCommand(props) {
     const cardContent = (
         <div>
             <div className="imgProduct">
-                <span></span>
+                <span>{props.product.image}</span>
             </div>
             <div className="infoProduct">
-                <div className="title">Shane Park</div>
-                <div className="price">$120</div>
+                <div className="title">{props.product.model}</div>
+                <div className="price">{props.product.price}</div>
                 <div className="bye">
                     <BasketIcon />
                     <div className="basket-count">+</div>

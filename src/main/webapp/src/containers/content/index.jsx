@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import IconButton from '../../components/button';
 import Home from '../home'
-import Basket from '../basket'
+import BasketPage from '../basket'
 import { Route, Switch } from 'react-router-dom'
 
 
@@ -16,7 +16,7 @@ class Content extends Component {
             <div className="content">
                 <Switch>
                     <Route exact path='/' component={Home}/>
-                    <Route path='/basket' component={Basket}/>
+                    <Route path='/basket' component={BasketPage}/>
                 </Switch>
                 <IconButton />
             </div>

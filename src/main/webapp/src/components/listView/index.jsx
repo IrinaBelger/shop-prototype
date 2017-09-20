@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import axios from 'axios';
 import {List, ListItem} from './../../../node_modules/material-ui/List';
 
@@ -33,6 +33,10 @@ class ListView extends React.Component {
         this.getCategoriesList();
     }
 
+    setActive(id){
+        console.log(id);
+    }
+
     render() {
         return (
             <div>
@@ -44,11 +48,12 @@ class ListView extends React.Component {
                     {
                         Object.keys(this.state.categories).map((c) =>
                             <ListItem primaryText={c} key={c}
-                                      initiallyOpen={false} primaryTogglesNestedList={this.state.categories[c]}
-                                      nestedItems={this.state.categories[c].map(p=> <ListItem
-                                                                      key={p.id}
-                                                                      primaryText={p.name}
-                                                                    />)}
+                                      initiallyOpen={false} primaryTogglesNestedList={this.state.categories[c].length >0}
+                                      nestedItems={this.state.categories[c].map(p => <ListItem
+                                          onClick={this.setActive.bind(this, p.id)}
+                                          key={p.id}
+                                          primaryText={p.name}
+                                      />)}
 
                             />)
                     }
