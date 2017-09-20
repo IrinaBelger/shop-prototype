@@ -1,42 +1,52 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import {List, ListItem} from './../../../node_modules/material-ui/List';
-function ListView(props) {
 
-    const categories = (
-        <div>
-            <div className="addProject clearfix">
-                <span>Category</span>
-                <button className="iconButton" onClick={props.onClick}>+</button>
+class ListView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            categories: [],
+            isLoading: true
+        }
+
+    }
+
+    getCategoriesList() {
+        axios.get('http://localhost:8080/product-category',
+            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
+            this.setCategoriesListState(response);
+
+        });
+    }
+
+    // Custom function we'll use to update the component state
+    setCategoriesListState(categories) {
+        this.setState({
+            categories: categories.data
+        });
+        this.render();
+        this.forceUpdate();
+    }
+
+    componentWillMount() {
+        this.getCategoriesList();
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="addProject clearfix">
+                    <span>Category</span>
+                    <button className="iconButton" onClick={this.state.onClick}>+</button>
+                </div>
+                <List>
+                    {this.state.categories.map(c => <ListItem primaryText={c.name} key={c.id}/>)}
+                </List>
             </div>
-            <List>
-                <ListItem primaryText="Sent mail" className="active" />
-                <ListItem primaryText="Drafts" />
-                <ListItem
-                    primaryText="Inbox"
-                    initiallyOpen={true}
-                    primaryTogglesNestedList={true}
-                    nestedItems={[
-                        <ListItem
-                            key={1}
-                            primaryText="Starred"
-                        />,
-                        <ListItem
-                            key={2}
-                            primaryText="Sent Mail"
-                            disabled={true}
-                            nestedItems={[
-                                <ListItem key={1} primaryText="Drafts" />,
-                            ]}
-                        />,
-                    ]}
-                />
-            </List>
-        </div>
-    );
-
-    return (
-        <div className="categories">{categories}</div>
-    );
+        );
+    }
 }
 
 export default ListView;

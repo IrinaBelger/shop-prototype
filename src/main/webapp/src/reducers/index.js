@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
-import projects from './projects';
-import tasks from './tasks';
+import categoriesReduser from './categoriesReduser';
 
 export default combineReducers({
-    projects, tasks
+    categoriesReduser
 })

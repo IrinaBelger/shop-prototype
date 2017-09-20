@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-          <SideBar list={[1,2,3,4,5]}/>
+          <SideBar/>
           <Header  />
           <Content />
         </div>

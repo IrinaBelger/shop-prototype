@@ -14,7 +14,9 @@
     "redux": "3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
-    "material-ui": ""
+    "material-ui": "",
+    "axios":"",
+    "redux-async-initial-state":""
   },
   "scripts": {
     "start": "react-scripts start",
