@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
+import Products from '../../components/products';
 
 function Home() {
     return (
-        <div >
-           Home page
-        </div>
-
+        <Products />
     );
 }
 export default Home;
