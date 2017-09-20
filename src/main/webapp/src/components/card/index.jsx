@@ -22,7 +22,6 @@ function Card() {
             </div>
 
         </div>
-
     );
 }
 

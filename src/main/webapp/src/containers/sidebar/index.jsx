@@ -11,6 +11,11 @@ class SideBar extends Component {
         return (
             <div className="sidebar">
                 <Card  />
+                <ul>
+                    {this.props.list.map(function(listValue){
+                        return <li>Муму #{listValue}</li>;
+                    })}
+                </ul>
             </div>
         );
     }

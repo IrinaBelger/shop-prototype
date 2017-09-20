@@ -1,4 +1,4 @@
-CREATE TABLE products (
+CREATE TABLE product (
   id          BIGINT auto_increment,
   model VARCHAR(255),
   description VARCHAR(255),

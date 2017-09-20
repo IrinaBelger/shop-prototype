@@ -1,5 +1,6 @@
 package ru.waveaccess.shop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.waveaccess.shop.model.Product;
 import ru.waveaccess.shop.repository.ProductRepository;
@@ -11,13 +12,17 @@ import java.util.List;
  */
 @Service
 public class ProductService {
+
+    @Autowired
     private ProductRepository productRepository;
 
     public List<Product> findAll(){
         return productRepository.findAll();
     }
 
-
+    public List<Product> findByProductType(Long productType){
+        return productRepository.findByProductType(productType);
+    }
 
 
 }
