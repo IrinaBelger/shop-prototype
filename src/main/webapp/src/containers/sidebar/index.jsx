@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ListView from '../../components/listView';
 import axios from 'axios';
 import {fetchCategories} from '../../actions/categoryActions'
+import {fetchProducts} from '../../actions/productActions'
 
 class SideBar extends Component {
      constructor(props) {
@@ -10,21 +11,16 @@ class SideBar extends Component {
          this.state = {
              active_type: props.active_type
          };
-
+         axios.get('http://localhost:8080/product-category/map',
+             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
+             this.props.onFetchCategories(response.data);
+         });
      }
 
-    componentWillMount() {
-        this.getCategoriesList();
-    }
-
     selectType (id) {
-        this.props.onSelectType(id);
-    }
-
-    getCategoriesList() {
-        axios.get('http://localhost:8080/product-category/map',
+        axios.get('http://localhost:8080/product/'+id,
             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onFetchCategories(response.data);
+            this.props.onFetchProducts(response.data);
         });
     }
 
@@ -41,12 +37,15 @@ class SideBar extends Component {
 }
 export default connect(
     state => ({
-        categories: state.categories,
-        active_type: state.active_type
+        categories: state.categoryReducer.categories,
+        active_type: state.categoryReducer.active_type
     }),
     dispatch => ({
         onFetchCategories: (categories) => {
             dispatch(fetchCategories(categories));
         },
+        onFetchProducts: (products) =>{
+            dispatch(fetchProducts(products));
+        }
     })
 )(SideBar);

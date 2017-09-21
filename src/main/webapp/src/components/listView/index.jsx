@@ -7,7 +7,7 @@ function ListView(props) {
     const active_type = props.active_type;
     let categoriesList = props.categories===null || props.categories=== undefined? [] : props.categories;
     console.log(props);
-
+    console.log(categoriesList);
     const categories = (
         <div>
             <div className="addProject clearfix">

@@ -6,7 +6,8 @@ function Products(props) {
     return (
         <div>
             {props.products.map(p =>
-                <CardProduct  product={p}/>)}
+                <CardProduct  key={p.id} product={p}
+                              addProductToBasket={ (e) => props.addProductToBasket(e)}/>)}
 
 
         </div>

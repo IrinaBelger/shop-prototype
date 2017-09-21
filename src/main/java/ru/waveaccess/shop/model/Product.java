@@ -1,8 +1,11 @@
 package ru.waveaccess.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.h2.result.SearchRow;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Blob;
 
 /**
@@ -11,7 +14,7 @@ import java.sql.Blob;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +27,7 @@ public class Product {
     private String description;
 
     @Column
+    @JsonIgnore
     private Blob image;
 
     @Column

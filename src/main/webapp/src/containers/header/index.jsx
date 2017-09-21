@@ -22,7 +22,7 @@ class Header extends Component {
         const searchClass = this.state.search_visible ? "open" : "";
         return (
             <div className="header">
-                <Card  />
+                <Card  items={this.props.items}/>
                 <NavMenu />
                 <Search onClick={ () => this.openSearch() }
                         className={searchClass}/>
@@ -33,6 +33,7 @@ class Header extends Component {
 }
 export default connect(
     state => ({
+        items: state.basketReducer.items
     }),
     dispatch => ({
     })

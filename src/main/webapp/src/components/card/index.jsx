@@ -12,7 +12,7 @@ const BasketIcon = (props) => (
         </SvgIcon>
     </Link>
 );
-function Card() {
+function Card(props) {
     return (
         <div className="avatar clearfix">
             <div className="avatar_img">
@@ -21,7 +21,7 @@ function Card() {
             <span>Trevor Reyes</span>
             <div className="basket-icon">
                 <BasketIcon />
-                <div className="basket-count">3</div>
+                <div className="basket-count">{props.items.length}</div>
             </div>
 
         </div>

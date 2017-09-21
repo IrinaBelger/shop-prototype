@@ -16,9 +16,9 @@ function CardCommand(props) {
             <div className="infoProduct">
                 <div className="title">{props.product.model}</div>
                 <div className="price">{props.product.price}</div>
-                <div className="bye">
+                <div className="bye" >
                     <BasketIcon />
-                    <div className="basket-count">+</div>
+                    <div className="basket-count" onClick={ () => props.addProductToBasket(props.product)}>+</div>
                 </div>
             </div>
         </div>
