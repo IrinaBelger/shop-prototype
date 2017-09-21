@@ -1,10 +1,7 @@
 package ru.waveaccess.shop.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.waveaccess.shop.model.Product;
 import ru.waveaccess.shop.service.ProductService;
 
@@ -28,5 +25,10 @@ public class ProductResources {
     @RequestMapping(value = "/{productType}", method = RequestMethod.GET)
     public List<Product> getByProductCategory(@PathVariable("productType") Long productType){
         return productService.findByProductType(productType);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public void saveProduct(@RequestBody Product product){
+        productService.saveProduct(product);
     }
 }

@@ -1,25 +1,16 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
 import CardProduct from '../../components/cardProduct';
 
 
-class Products extends Component {
-    render() {
+function Products(props) {
+    return (
+        <div>
+            {props.products.map(p =>
+                <CardProduct  product={p}/>)}
 
-        return (
-            <div>
-                {
-                    this.props.products.map(p =>
-                    <CardProduct  product={p}/>)}
-            </div>
-        );
-    }
+
+        </div>
+    );
 }
 
-function mapStateToProps (state) {
-    return {
-        products: state.productsState.products
-    }
-}
-
-export default connect(mapStateToProps)(Products)
+export default Products;

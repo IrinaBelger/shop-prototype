@@ -24,5 +24,9 @@ public class ProductService {
         return productRepository.findByProductType(productType);
     }
 
+    public void saveProduct(Product product){
+        productRepository.save(product);
+    }
+
 
 }

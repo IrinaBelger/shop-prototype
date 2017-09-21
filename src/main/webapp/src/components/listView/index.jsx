@@ -1,66 +1,39 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import axios from 'axios';
+
 import {List, ListItem} from './../../../node_modules/material-ui/List';
 
-class ListView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            categories: [],
-            isLoading: true
-        }
+function ListView(props) {
 
-    }
+    const active_type = props.active_type;
+    let categoriesList = props.categories===null || props.categories=== undefined? [] : props.categories;
+    console.log(props);
 
-    getCategoriesList() {
-        axios.get('http://localhost:8080/product-category/map',
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.setCategoriesListState(response);
-
-        });
-    }
-
-    // Custom function we'll use to update the component state
-    setCategoriesListState(categories) {
-        this.setState({
-            categories: categories.data
-        });
-        this.render();
-    }
-
-    componentWillMount() {
-        this.getCategoriesList();
-    }
-
-    setActive(id){
-        console.log(id);
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="addProject clearfix">
-                    <span>Category</span>
-                    <button className="iconButton" onClick={this.state.onClick}>+</button>
-                </div>
-                <List>
-                    {
-                        Object.keys(this.state.categories).map((c) =>
-                            <ListItem primaryText={c} key={c}
-                                      initiallyOpen={false} primaryTogglesNestedList={this.state.categories[c].length >0}
-                                      nestedItems={this.state.categories[c].map(p => <ListItem
-                                          onClick={this.setActive.bind(this, p.id)}
-                                          key={p.id}
-                                          primaryText={p.name}
-                                      />)}
-
-                            />)
-                    }
-                </List>
+    const categories = (
+        <div>
+            <div className="addProject clearfix">
+                <span>Category</span>
+                <button className="iconButton" onClick={props.onClick}>+</button>
             </div>
-        );
-    }
+            <List>
+                {
+                    Object.keys(categoriesList).map((c) =>
+                        <ListItem primaryText={c} key={c}
+                                  initiallyOpen={false} primaryTogglesNestedList={categoriesList[c].length >0}
+                                  nestedItems={categoriesList[c].map(p => <ListItem
+                                      onClick={ () => props.selectType(p.id)  }
+                                      key={p.id}
+                                      primaryText={p.name}
+                                  />)}
+
+                        />)
+                }
+            </List>
+        </div>
+    );
+
+    return (
+        <div className="categories">{categories}</div>
+    );
 }
 
 export default ListView;

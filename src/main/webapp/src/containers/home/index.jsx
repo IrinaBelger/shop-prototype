@@ -5,7 +5,7 @@ import DetailCard from '../../components/detailCard';
 
 function Home() {
     return (
-        <Products/>
+        <Products products={[]}/>
         //
         // <DetailCard />
     );
