@@ -2,12 +2,13 @@ import React from 'react';
 import FloatingActionButton from './../../../node_modules/material-ui/FloatingActionButton';
 import ContentAdd from './../../../node_modules/material-ui/svg-icons/content/add';
 
-function IconButton() {
+function IconButton(props) {
     return (
         <FloatingActionButton
-            backgroundColor="#2BB2AC"
+            children={props.children}
+            backgroundColor={props.backgroundColor}
+            onClick={props.onClick}
             className="fixedButton" >
-            <ContentAdd />
         </FloatingActionButton>
     );
 }
