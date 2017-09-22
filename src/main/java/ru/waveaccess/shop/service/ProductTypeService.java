@@ -20,6 +20,10 @@ public class ProductTypeService {
         return productTypeRepository.findByProductCategory(productCategory);
     }
 
+    public ProductType findByProductTypeId(Long productTypeId){
+        return productTypeRepository.findOne(productTypeId);
+    }
+
     public List<ProductType> findAll(){
         return productTypeRepository.findAll();
     }

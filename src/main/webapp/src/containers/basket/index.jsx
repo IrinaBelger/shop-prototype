@@ -8,8 +8,8 @@ import {fetchBasket, countCost} from '../../actions/basketActions'
 class BasketPage extends Component {
     constructor(props) {
         super(props);
-        this.props.fetchBasket();
-        this.props.countCost();
+        this.props.onFetchBasket();
+        this.props.onCountCost();
     }
     render() {
         return (
@@ -26,10 +26,10 @@ export default connect(
         cost: state.basketReducer.cost
     }),
     dispatch => ({
-        fetchBasket: () => {
+        onFetchBasket: () => {
             dispatch(fetchBasket());
         },
-        countCost: () => {
+        onCountCost: () => {
             dispatch(countCost());
         }
     })

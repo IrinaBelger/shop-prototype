@@ -43,7 +43,7 @@ const Basket = (props) => (
                 <TableRowColumn></TableRowColumn>
                 <TableRowColumn></TableRowColumn>
                 <TableRowColumn></TableRowColumn>
-                <TableRowColumn>All</TableRowColumn>
+                <TableRowColumn>Total</TableRowColumn>
                 <TableRowColumn>{props.cost}</TableRowColumn>
             </TableRow>
         </TableFooter>
