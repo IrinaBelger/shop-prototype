@@ -1,27 +1,96 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import ListView from '../../components/listView';
 import axios from 'axios';
 import {fetchCategories} from '../../actions/categoryActions'
 import {fetchProducts} from '../../actions/productActions'
+import DrawerRight from '../../components/drawer';
 
 class SideBar extends Component {
-     constructor(props) {
-         super(props);
-         this.state = {
-             active_type: props.active_type
-         };
-         axios.get('http://localhost:8080/product-category/map',
-             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-             this.props.onFetchCategories(response.data);
-         });
-     }
+    constructor(props) {
+        super(props);
+        this.state = {
+            openDrawer: false,
+            category: {
+                name: '',
+                types: ''
+            }
+        };
+        this.fetchCategories();
+    }
 
-    selectType (id) {
-        axios.get('http://localhost:8080/product/'+id,
+    fetchCategories() {
+        axios.get('http://localhost:8080/product-category/map',
+            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
+            this.props.onFetchCategories(response.data);
+        });
+    }
+
+    openDrawer() {
+        this.setState({
+            openDrawer: !this.state.openDrawer
+        });
+    }
+
+
+    selectType(id) {
+        axios.get('http://localhost:8080/product/' + id,
             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
             this.props.onFetchProducts(response.data);
         });
+    }
+
+    onAddCategory() {
+        this.setState({
+            openDrawer: true
+        });
+    }
+
+    onChangeCategoryName(event, value) {
+        this.setState({
+            openDrawer: this.state.openDrawer,
+            category: {
+                name: value,
+                types: this.state.category.types
+            }
+        });
+    }
+
+    onChangeTypesName(event, value) {
+        this.setState({
+            openDrawer: this.state.openDrawer,
+            category: {
+                name: this.state.category.name,
+                types: value
+            }
+        });
+    }
+
+    onSave() {
+        if (!(this.state.category.name === '' ||
+                this.state.category.types === '')) {
+            let self = this;
+            axios({
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                url: 'http://localhost:8080/product-category',
+                data: this.state.category
+            })
+            .then(response => {
+                console.log(response);
+                self.setState({
+                    openDrawer: false,
+                    category: {
+                        name: '',
+                        types: ''
+                    }
+                });
+                self.fetchCategories();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 
     render() {
@@ -29,12 +98,23 @@ class SideBar extends Component {
             <div className="sidebar">
                 <ListView categories={this.props.categories}
                           active_type={this.props.active_type}
-                          onClick={ () => {this.handleToggle('ADD_CATEGORY')  }}
-                          selectType={ (e) => this.selectType(e) }/>
+                          onAddCategory={() => {
+                              this.onAddCategory()
+                          }}
+                          selectType={(e) => this.selectType(e)}/>
+                <DrawerRight
+                    title={'Create new category'}
+                    active_type={'ADD_CATEGORY'}
+                    openDrawer={this.state.openDrawer}
+                    onClose={() => this.openDrawer()}
+                    onChangeCategoryName={(event, value) => this.onChangeCategoryName(event, value)}
+                    onChangeTypesName={(event, value) => this.onChangeTypesName(event, value)}
+                    onSave={() => this.onSave()}/>
             </div>
         );
     }
 }
+
 export default connect(
     state => ({
         categories: state.categoryReducer.categories,
@@ -44,7 +124,7 @@ export default connect(
         onFetchCategories: (categories) => {
             dispatch(fetchCategories(categories));
         },
-        onFetchProducts: (products) =>{
+        onFetchProducts: (products) => {
             dispatch(fetchProducts(products));
         }
     })

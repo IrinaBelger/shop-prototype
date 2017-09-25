@@ -12,18 +12,19 @@ function ListView(props) {
         <div>
             <div className="addProject clearfix">
                 <span>Category</span>
-                <button className="iconButton" onClick={props.onClick}>+</button>
+                <button className="iconButton" onClick={props.onAddCategory}>+</button>
             </div>
             <List>
                 {
                     Object.keys(categoriesList).map((c) =>
-                        <ListItem primaryText={c} key={c}
+                            <ListItem primaryText={c} key={c}
                                   initiallyOpen={false} primaryTogglesNestedList={categoriesList[c].length >0}
                                   nestedItems={categoriesList[c].map(p => <ListItem
                                       onClick={ () => props.selectType(p.id)  }
                                       key={p.id}
                                       primaryText={p.name}
-                                  />)}
+                                  />
+                                  )}
 
                         />)
                 }

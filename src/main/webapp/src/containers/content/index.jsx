@@ -10,12 +10,7 @@ import BasketPage from '../basket';
 import ContentAdd from './../../../node_modules/material-ui/svg-icons/content/add';
 import {getCategories, getTypesByCategoryId, setType, setCategory} from '../../actions/categoryActions'
 import {
-    saveProduct,
-    editNewProduct,
-    editModelNewProduct,
-    editDescriptionNewProduct,
-    editPriceNewProduct,
-    editTypeNewProduct
+    saveProduct
 } from '../../actions/productActions'
 
 class Content extends Component {
@@ -91,21 +86,39 @@ class Content extends Component {
         }
     }
 
-    handleToggle(){
+    handleToggle() {
         console.log('okrtnfgfghok')
     }
-    onSave() {
-        if(!(this.state.product.model === '' ||
-            this.state.product.price ==='' ||
-            this.state.product.description === '' ||
-            this.state.product.productTypeId === 0)) {
-            axios.post('http://localhost:8080/product',
-                this.state.product,
-                {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
 
-                console.log('okokok')
-            });
-            // this.openDrawer()
+    onSave() {
+        if (!(this.state.product.model === '' ||
+                this.state.product.price === '' ||
+                this.state.product.description === '' ||
+                this.state.product.productTypeId === 0)) {
+            let self = this;
+            axios({
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                url: 'http://localhost:8080/product',
+                data: this.state.product
+            })
+                .then(response => {
+                    console.log(response);
+                    self.setState({
+                        openDrawer: false,
+                        disableType: true,
+                        disabledButton: true,
+                        product: {
+                            model: '',
+                            description: '',
+                            price: '',
+                            productTypeId: 0
+                        }
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
 
     }
@@ -161,6 +174,8 @@ class Content extends Component {
                             children={<ContentAdd/>}
                 />
                 <DrawerRight
+                    title={'Create new product'}
+                    active_type={'ADD_PRODUCT'}
                     disableType={this.props.newProduct.disableType}
                     selectedCategory={this.props.category}
                     selectedType={this.props.type}
@@ -204,21 +219,6 @@ export default connect(
         },
         onSaveProduct: (product) => {
             dispatch(saveProduct(product))
-        },
-        onChangeModel: (model) => {
-            dispatch(editModelNewProduct(model));
-        },
-        onChangeDescription: (description) => {
-            dispatch(editDescriptionNewProduct(description));
-        },
-        onChangePrice: (price) => {
-            dispatch(editPriceNewProduct(price));
-        },
-        onChangeType: (type) => {
-            dispatch(editTypeNewProduct(type));
-        },
-        onChangeProduct: (product) => {
-            dispatch(editNewProduct(product));
         }
     })
 )(Content);

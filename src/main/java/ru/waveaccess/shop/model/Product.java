@@ -37,6 +37,8 @@ public class Product implements Serializable{
     @JoinColumn(name = "product_type_id", nullable = false)
     private ProductType productType;
 
+    public Product(){}
+
     public Long getId() {
         return id;
     }

@@ -229,7 +229,7 @@
 
 .iconButton {
   font-size: 20px;
-  color: #fff;
+
   float: right;
   background: transparent;
   box-shadow: none;
@@ -243,6 +243,7 @@
   opacity: 1;
   transition: all 300ms;
 }
+
 .drawer-right {
   margin-bottom: 20px;
 }

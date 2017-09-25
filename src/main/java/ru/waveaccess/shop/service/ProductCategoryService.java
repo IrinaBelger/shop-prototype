@@ -19,4 +19,9 @@ public class ProductCategoryService {
     public List<ProductCategory> findAll(){
         return productCategoryRepository.findAll();
     }
+
+    public ProductCategory save(ProductCategory productCategory){
+        return productCategoryRepository.save(productCategory);
+    }
+
 }
