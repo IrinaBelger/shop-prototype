@@ -8,7 +8,8 @@ const initialState = {
         description: '',
         price: '',
         productTypeId: 0
-    }
+    },
+    product: {}
 };
 
 export default function  productReducer(state = initialState, action) {
@@ -17,6 +18,14 @@ export default function  productReducer(state = initialState, action) {
             return { ...state, products: action.payload};
         case 'EDIT_NEW_PRODUCT':
             return { ...state, newProduct: action.payload};
+        case 'SET_PRODUCT':
+            return { ...state, product: action.payload};
+        case 'DELETE_PRODUCT':
+            return { ...state, products:
+                state.products.filter(function(product){
+                    return product.id !== action.payload.id;
+                })
+            };
         default:
             return state;
     }

@@ -12,12 +12,16 @@ class Home extends Component {
     addProductToBasket(product){
         this.props.addProductToBasket(product);
     }
+    viewProduct(product){
+
+    }
     render() {
         return (
-            <Products products={this.props.products}
-                      addProductToBasket={ (e) => {this.addProductToBasket(e)  }}/>
-            //
-            // <DetailCard />
+            <div>
+                <Products products={this.props.products}
+                      addProductToBasket={ (e) => {this.addProductToBasket(e)  }}
+                      viewProduct={(e) => {this.viewProduct(e)}}/>
+            </div>
         );
     }
 }

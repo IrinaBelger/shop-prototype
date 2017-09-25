@@ -24,8 +24,16 @@ public class ProductService {
         return productRepository.findByProductType(productType);
     }
 
+    public Product findById(Long productId){
+        return productRepository.findOne(productId);
+    }
+
     public void saveProduct(Product product){
         productRepository.save(product);
+    }
+
+    public void delete(Long productId){
+        productRepository.delete(productId);
     }
 
 

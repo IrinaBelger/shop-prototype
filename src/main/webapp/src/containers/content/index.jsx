@@ -7,6 +7,7 @@ import IconButton from '../../components/button';
 import Home from '../home';
 import DrawerRight from '../../components/drawer';
 import BasketPage from '../basket';
+import ProductCard from '../productCard';
 import ContentAdd from './../../../node_modules/material-ui/svg-icons/content/add';
 import {getCategories, getTypesByCategoryId, setType, setCategory} from '../../actions/categoryActions'
 import {
@@ -168,6 +169,7 @@ class Content extends Component {
                 <Switch>
                     <Route exact path='/' component={Home}/>
                     <Route path='/basket' component={BasketPage}/>
+                    <Route path='/product/:productId' component={ProductCard}/>
                 </Switch>
                 <IconButton onClick={() => this.openDrawer()}
                             backgroundColor="#2BB2AC"

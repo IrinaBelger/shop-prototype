@@ -12,3 +12,11 @@ export const saveProduct = (product) => dispatch => {
 export const editNewProduct = (product) => dispatch => {
     dispatch({ type: 'EDIT_NEW_PRODUCT', payload: product})
 };
+
+export const setProduct = (product) => dispatch => {
+    dispatch({ type: 'SET_PRODUCT', payload: product})
+};
+
+export const deleteProduct = (product) => dispatch => {
+    dispatch({ type: 'DELETE_PRODUCT', payload: product})
+};
