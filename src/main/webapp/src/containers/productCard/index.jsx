@@ -8,7 +8,6 @@ import {addProductToBasket} from '../../actions/basketActions'
 class ProductCard extends Component {
     constructor(props) {
         super(props);
-
         this.getProduct(props.match.params.productId);
     }
 
@@ -42,7 +41,7 @@ class ProductCard extends Component {
         return (
             <DetailCard product={this.props.product}
             delete={() => this.deleteProduct()}
-            edit={() => this.editProduct}
+            edit={() => this.editProduct()}
             addProductToBasket={()=>this.addProductToBasket()}/>
         );
     }

@@ -6,18 +6,30 @@ const initialState = {
     cost: 0
 };
 
-export default function  basketReducer(state = initialState, action) {
-    switch(action.type){
+export default function basketReducer(state = initialState, action) {
+    let currentCost = 0;
+    switch (action.type) {
         case 'ADD_PRODUCT_TO_BASKET':
-            return { ...state, items: [...state.items,action.payload]};
+            return {...state, items: [...state.items, action.payload]};
         case 'FETCH_BASKET':
-            return { ...state, items: state.items};
+            return {...state, items: state.items};
         case 'COUNT_COST':
-            let currentCost=0;
-            for(let i=0; i<state.items.length; i++){
-                currentCost+=state.items[i].price;
+            currentCost = 0;
+            for (let i = 0; i < state.items.length; i++) {
+                currentCost += state.items[i].price;
             }
-            return { ...state, cost: currentCost};
+            return {...state, cost: currentCost};
+        case 'DELETE_PRODUCT_FROM_BASKET':
+            currentCost = 0;
+            for (let i = 0; i < state.items.length; i++) {
+                currentCost += state.items[i].id !== action.payload.id ? state.items[i].price : 0;
+            }
+            return {
+                ...state, items: state.items.filter(function (product) {
+                    return product.id !== action.payload.id;
+                }),
+                cost: currentCost
+            };
         default:
             return state;
     }

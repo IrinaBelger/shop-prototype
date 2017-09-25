@@ -19,6 +19,10 @@ class SideBar extends Component {
         this.fetchCategories();
     }
 
+    navigateToPage = () => {
+        this.context.router.push('/')
+    };
+
     fetchCategories() {
         axios.get('http://localhost:8080/product-category/map',
             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
@@ -34,9 +38,12 @@ class SideBar extends Component {
 
 
     selectType(id) {
+        let self = this;
         axios.get('http://localhost:8080/product/' + id,
             {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
             this.props.onFetchProducts(response.data);
+            self.navigateToPage();
+
         });
     }
 
@@ -86,6 +93,7 @@ class SideBar extends Component {
                     }
                 });
                 self.fetchCategories();
+                self.navigateToPage();
             })
             .catch(function (error) {
                 console.log(error);
@@ -114,6 +122,10 @@ class SideBar extends Component {
         );
     }
 }
+
+SideBar.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default connect(
     state => ({

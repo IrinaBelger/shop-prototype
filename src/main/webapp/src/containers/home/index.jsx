@@ -10,7 +10,9 @@ class Home extends Component {
     }
 
     addProductToBasket(product){
-        this.props.addProductToBasket(product);
+        if(!this.props.productsInBasket.includes(product)) {
+            this.props.addProductToBasket(product);
+        }
     }
     viewProduct(product){
 
@@ -27,7 +29,8 @@ class Home extends Component {
 }
 export default connect(
     state => ({
-        products: state.productReducer.products
+        products: state.productReducer.products,
+        productsInBasket: state.basketReducer.items
     }),
     dispatch => ({
         addProductToBasket: (product) => {

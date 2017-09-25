@@ -15,3 +15,7 @@ export const countCost = () => dispatch => {
     const payload = {};
     dispatch({ type: 'COUNT_COST', payload })
 };
+
+export const deleteProductFromBasket = (product) => dispatch => {
+    dispatch({ type: 'DELETE_PRODUCT_FROM_BASKET', payload: product })
+};

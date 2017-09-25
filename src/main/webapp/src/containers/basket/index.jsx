@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Basket from '../../components/basket';
 import IconButton from '../../components/button';
-import {fetchBasket, countCost} from '../../actions/basketActions'
+import {fetchBasket, countCost, deleteProductFromBasket} from '../../actions/basketActions'
 
 
 class BasketPage extends Component {
@@ -11,10 +11,14 @@ class BasketPage extends Component {
         this.props.onFetchBasket();
         this.props.onCountCost();
     }
+    deleteProductFromBasket(product){
+        this.props.onDeleteProductFromBasket(product);
+    }
     render() {
         return (
             <Basket items={this.props.items}
-                    cost={this.props.cost}/>
+                    cost={this.props.cost}
+                    delete={(e) => this.deleteProductFromBasket(e)}/>
         );
     }
 }
@@ -31,6 +35,9 @@ export default connect(
         },
         onCountCost: () => {
             dispatch(countCost());
-        }
+        },
+        onDeleteProductFromBasket: (product) => {
+            dispatch(deleteProductFromBasket(product));
+        },
     })
 )(BasketPage);

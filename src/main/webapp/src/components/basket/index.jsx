@@ -29,7 +29,7 @@ const Basket = (props) => (
                     <TableRowColumn>{i.price}</TableRowColumn>
                     <TableRowColumn>{i.description}</TableRowColumn>
                     <TableRowColumn>
-                        <IconButton>
+                        <IconButton onClick={() => props.delete(i)}>
                             <Delete />
                         </IconButton>
                     </TableRowColumn>

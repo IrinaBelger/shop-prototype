@@ -19,7 +19,7 @@ const DetailCard = (props) => (
         <CardActions>
             <FlatButton label="Edit" />
             <FlatButton label="Delete" onClick={() => props.delete()}/>
-            <FlatButton label="Bye" />
+            <FlatButton label="Bye" onClick={() => props.addProductToBasket()}/>
         </CardActions>
         <div className="clearfix"></div>
     </Card>
