@@ -52,13 +52,13 @@ public class ProductResources {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveProduct(@RequestBody ProductDto productDto){
+    public Product saveProduct(@RequestBody ProductDto productDto){
         Product product = new Product();
         product.setDescription(productDto.description);
         product.setModel(productDto.model);
         product.setPrice(Long.parseLong(productDto.price));
         product.setProductType(productTypeService.findByProductTypeId(productDto.productTypeId));
-        productService.saveProduct(product);
+        return  productService.saveProduct(product);
     }
 
     private static class ProductDto{

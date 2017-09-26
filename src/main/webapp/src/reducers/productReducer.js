@@ -16,6 +16,8 @@ export default function  productReducer(state = initialState, action) {
     switch(action.type){
         case 'CLEAR_PRODUCTS':
             return { ...state, products: []};
+        case 'SAVE_PRODUCT':
+            return { ...state, products: [...state.products, action.payload]};
         case 'FETCH_PRODUCTS':
             return { ...state, products: action.payload};
         case 'EDIT_NEW_PRODUCT':

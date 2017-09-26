@@ -87,10 +87,6 @@ class Content extends Component {
         }
     }
 
-    handleToggle() {
-        console.log('okrtnfgfghok')
-    }
-
     onSave() {
         if (!(this.state.product.model === '' ||
                 this.state.product.price === '' ||
@@ -105,6 +101,9 @@ class Content extends Component {
             })
                 .then(response => {
                     console.log(response);
+                    if(Object.keys(self.props.active_type).length > 0 && self.props.active_type.id === self.state.product.productTypeId){
+                        self.props.onSaveProduct(response.data);
+                    }
                     self.setState({
                         openDrawer: false,
                         disableType: true,
@@ -204,7 +203,8 @@ export default connect(
         types: state.categoryReducer.types,
         category: state.categoryReducer.category,
         newProduct: state.productReducer.newProduct,
-        type: state.categoryReducer.type
+        type: state.categoryReducer.type,
+        active_type: state.categoryReducer.active_type
     }),
     dispatch => ({
         onGetTypesByCategoryId: (types) => {
