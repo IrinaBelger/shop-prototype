@@ -1,6 +1,8 @@
 package ru.waveaccess.shop.model;
 
 import javax.persistence.*;
+import java.util.List;
+
 /**
  * Created by Irina Kazantseva on 19.09.2017.
  */

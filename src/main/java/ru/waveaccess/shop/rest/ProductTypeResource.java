@@ -1,10 +1,9 @@
 package ru.waveaccess.shop.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import ru.waveaccess.shop.model.ProductCategory;
 import ru.waveaccess.shop.model.ProductType;
 import ru.waveaccess.shop.service.ProductTypeService;
 
@@ -29,4 +28,15 @@ public class ProductTypeResource {
     public List<ProductType> getByProductCategory(@PathVariable("productCategory") Long productCategory){
         return productTypeService.findByProductCategory(productCategory);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editProductType(@RequestBody ProductType productType) {
+        productTypeService.edit(productType);
+    }
+
+    @RequestMapping( value ="/{productTypeId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("productTypeId") Long productTypeId){
+        productTypeService.deleteById(productTypeId);
+    }
+
 }

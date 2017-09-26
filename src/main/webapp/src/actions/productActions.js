@@ -20,3 +20,7 @@ export const setProduct = (product) => dispatch => {
 export const deleteProduct = (product) => dispatch => {
     dispatch({ type: 'DELETE_PRODUCT', payload: product})
 };
+
+export const clearProducts = (product) => dispatch => {
+    dispatch({ type: 'CLEAR_PRODUCTS', payload: product})
+};

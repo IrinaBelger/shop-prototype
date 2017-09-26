@@ -134,6 +134,20 @@ function DrawerRight(props) {
                                     underlineFocusStyle={textFieldStyleFocused}
                                 />
                             </div>
+                        case 'EDIT_CATEGORY','EDIT_TYPE' :
+                            return <div>
+                                <TextField
+                                    onChange={(event, value) => props.onChangeName(event, value)}
+                                    floatingLabelText="Name"
+                                    multiLine={true}
+                                    rows={1}
+                                    style={textFieldStyle}
+                                    textareaStyle={textFieldStyle}
+                                    floatingLabelStyle={textFieldStyle}
+                                    floatingLabelFocusStyle={textFieldStyleFocused}
+                                    underlineFocusStyle={textFieldStyleFocused}
+                                />
+                            </div>
                         default :
                             null
                     }

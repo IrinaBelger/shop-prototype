@@ -1,6 +1,7 @@
 package ru.waveaccess.shop.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Irina Kazantseva on 19.09.2017.
@@ -43,6 +44,7 @@ public class ProductType {
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
     }
+
 
     @Override
     public boolean equals(Object o) {

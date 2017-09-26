@@ -36,6 +36,11 @@ public class ProductResources {
         return productService.findByProductType(productType);
     }
 
+    @RequestMapping(value = "/getProductStatus/{productId}", method = RequestMethod.GET)
+    public boolean getProductStatus(@PathVariable("productId") Long productId){
+        return !(productService.findById(productId) == null);
+    }
+
     @RequestMapping(value = "/getById/{productId}", method = RequestMethod.GET)
     public Product getById(@PathVariable("productId") Long productId){
         return productService.findById(productId);
@@ -43,7 +48,7 @@ public class ProductResources {
 
     @RequestMapping( value ="/{productId}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("productId") Long productId){
-        productService.delete(productId);
+        productService.deleteById(productId);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)

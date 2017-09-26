@@ -17,3 +17,24 @@ export const setType = (type) => dispatch => {
 export const setCategory = (category) => dispatch => {
     dispatch({ type: 'SET_CATEGORY', payload: category })
 };
+export const setActiveType = (active_type) => dispatch => {
+    dispatch({ type: 'SET_ACTIVE_TYPE', payload: active_type })
+};
+export const setActiveCategory = (active_category) => dispatch => {
+    dispatch({ type: 'SET_ACTIVE_CATEGORY', payload: active_category })
+};
+export const deleteActiveCategory = (active_category) => dispatch => {
+    dispatch({ type: 'DELETE_ACTIVE_CATEGORY', payload: active_category })
+};
+export const deleteActiveType = (active_type) => dispatch => {
+    dispatch({ type: 'DELETE_ACTIVE_TYPE', payload: active_type })
+};
+export const editActiveCategory = (active_category) => dispatch => {
+    dispatch({ type: 'EDIT_ACTIVE_CATEGORY', payload: active_category })
+};
+export const editActiveType = (active_type) => dispatch => {
+    dispatch({ type: 'EDIT_ACTIVE_TYPE', payload: active_type })
+};
+export const clearActiveType = (active_type) => dispatch => {
+    dispatch({ type: 'CLEAR_ACTIVE_TYPE', payload: active_type })
+};

@@ -21,8 +21,8 @@ function NavMenu(props) {
                 width={150}
                 iconStyle={iconStyle}
             >
-                <MenuItem primaryText="Edit" onClick={props.onClick} />
-                <MenuItem primaryText="Delete" onClick={props.openDeleteModal} />
+                <MenuItem primaryText="Edit" onClick={props.edit} />
+                <MenuItem primaryText="Delete" onClick={props.delete} />
             </IconMenu>
         </div>
     );

@@ -4,10 +4,7 @@ import {List, ListItem} from './../../../node_modules/material-ui/List';
 
 function ListView(props) {
 
-    const active_type = props.active_type;
     let categoriesList = props.categories===null || props.categories=== undefined? [] : props.categories;
-    console.log(props);
-    console.log(categoriesList);
     const categories = (
         <div>
             <div className="addProject clearfix">
@@ -19,7 +16,9 @@ function ListView(props) {
                     Object.keys(categoriesList).map((c) =>
                             <ListItem primaryText={c} key={c}
                                   initiallyOpen={false} primaryTogglesNestedList={categoriesList[c].length >0}
+                                      onClick={() => props.selectCategory(c)}
                                   nestedItems={categoriesList[c].map(p => <ListItem
+                                      className={props.active_type.id === p.id ? "active" : "" }
                                       onClick={ () => props.selectType(p.id)  }
                                       key={p.id}
                                       primaryText={p.name}

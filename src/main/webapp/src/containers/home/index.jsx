@@ -14,9 +14,7 @@ class Home extends Component {
             this.props.addProductToBasket(product);
         }
     }
-    viewProduct(product){
 
-    }
     render() {
         return (
             <div>

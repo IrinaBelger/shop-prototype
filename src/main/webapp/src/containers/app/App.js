@@ -4,7 +4,7 @@ import SideBar from '../sidebar';
 import Header from '../header';
 import Content from '../content';
 class App extends Component {
-  render() {
+    render() {
     return (
         <div className="App">
           <SideBar/>

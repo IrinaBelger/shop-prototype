@@ -165,6 +165,10 @@
   background: #2BB2AC!important;
   color: #fff!important;
 }
+.active {
+  background: #2BB2AC!important;
+  color: #fff!important;
+}
 .product {
   width: 300px;
   float: left;

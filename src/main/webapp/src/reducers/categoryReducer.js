@@ -6,7 +6,9 @@ const initialState = {
     categoryList: [],
     types: [],
     type: {},
-    category: {}
+    category: {},
+    active_type: {},
+    active_category: {}
 };
 
 export default function  categoryReduser(state = initialState, action) {
@@ -21,6 +23,20 @@ export default function  categoryReduser(state = initialState, action) {
             return { ...state, type: action.payload};
         case 'SET_CATEGORY':
             return { ...state, category: action.payload};
+        case 'SET_ACTIVE_TYPE':
+            return { ...state, active_type: {id: action.payload} };
+        case 'CLEAR_ACTIVE_TYPE':
+            return { ...state, active_type: {}};
+        case 'DELETE_ACTIVE_TYPE':
+            return { ...state, active_type: {}};
+        case 'SET_ACTIVE_CATEGORY':
+            return { ...state,  active_category: action.payload, active_type:{}};
+        case 'DELETE_ACTIVE_CATEGORY':
+            return { ...state,  active_category: {}, active_type: {}};
+        case 'EDIT_ACTIVE_CATEGORY':
+            return { ...state,  active_category: action.payload, active_type:{}};
+        case 'EDIT_ACTIVE_TYPE':
+            return { ...state,  active_category: {}, active_type: {id: action.payload}};
         default:
             return state;
     }
