@@ -30,6 +30,17 @@ export default function basketReducer(state = initialState, action) {
                 }),
                 cost: currentCost
             };
+        case 'UPDATE_PRODUCT_FROM_BASKET':
+            currentCost = 0;
+            for (let i = 0; i < state.items.length; i++) {
+                currentCost += state.items[i].id !== action.payload.id ? state.items[i].price : action.payload.price;
+            }
+            return {
+                ...state, items: state.items.map(function (product) {
+                    return product.id !== action.payload.id ? product : action.payload;
+                }),
+                cost: currentCost
+            };
         default:
             return state;
     }

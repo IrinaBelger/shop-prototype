@@ -60,6 +60,15 @@ public class ProductResources {
         product.setProductType(productTypeService.findByProductTypeId(productDto.productTypeId));
         return  productService.saveProduct(product);
     }
+    @RequestMapping(value ="/{productId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Product editProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto){
+        Product product = productService.findById(productId);
+        product.setDescription(productDto.description);
+        product.setModel(productDto.model);
+        product.setPrice(Long.parseLong(productDto.price));
+        product.setProductType(productTypeService.findByProductTypeId(productDto.productTypeId));
+        return  productService.saveProduct(product);
+    }
 
     private static class ProductDto{
         private String model;

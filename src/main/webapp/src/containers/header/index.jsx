@@ -50,10 +50,10 @@ class Header extends Component {
     }
 
     editActive(event, value) {
-        if (this.props.active_type === {} && this.props.active_category === {}) {
+        if (this.props.active_type===null || this.props.active_category===null || Object.keys(this.props.active_type).length === 0  && Object.keys(this.props.active_category).length === 0) {
             //TODO modal open
         } else {
-            if (this.props.active_type === {} && !(this.props.active_category === {})) {
+            if (Object.keys(this.props.active_type).length === 0 && !(Object.keys(this.props.active_category).length === 0)) {
                 //TODO edit category
                 this.setState({
                     search_visible: this.state.search_visible,
@@ -66,7 +66,7 @@ class Header extends Component {
                 });
 
             } else {
-                if (!(this.props.active_type === {}) && !(this.props.active_category === {})) {
+                if (!(Object.keys(this.props.active_type).length === 0) && !(Object.keys(this.props.active_category).length === 0)) {
                     //TODO edit type
                     this.setState({
                         search_visible: this.state.search_visible,
@@ -86,7 +86,7 @@ class Header extends Component {
     }
 
     deleteActive(event, value) {
-        if (Object.keys(this.props.active_type).length === 0  && Object.keys(this.props.active_category).length === 0) {
+        if (this.props.active_type===null || this.props.active_category===null || Object.keys(this.props.active_type).length === 0  && Object.keys(this.props.active_category).length === 0) {
             //TODO modal open
         } else {
             if (Object.keys(this.props.active_type).length === 0 && !(Object.keys(this.props.active_category).length === 0)) {
@@ -129,7 +129,6 @@ class Header extends Component {
     }
 
     onSetNewValue(event, value) {
-        if (!(this.state.categoryName === '' && this.state.typeName === '')) {
             switch (this.state.active_type) {
                 case 'EDIT_TYPE':
                     this.setState({
@@ -141,6 +140,7 @@ class Header extends Component {
                         categoryName: this.state.categoryName,
                         typeName: value
                     });
+                    break;
 
                 case 'EDIT_CATEGORY':
                     this.setState({
@@ -152,9 +152,10 @@ class Header extends Component {
                         categoryName: value,
                         typeName: this.state.typeName
                     });
+                    break;
 
             }
-        }
+
     }
 
     onCheckProductsInBasketAfterDelete(){
@@ -177,7 +178,7 @@ class Header extends Component {
                 case 'EDIT_TYPE':
                     axios({
                         method: 'put',
-                        headers: {'Content-Type': 'application/json'},
+                        headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept", 'Content-Type': 'application/json'},
                         url: 'http://localhost:8080/product-type',
                         data: {
                             id: this.props.active_type.id,
@@ -200,12 +201,13 @@ class Header extends Component {
                         .catch(function (error) {
                             console.log(error);
                         });
+                    break;
 
 
                 case 'EDIT_CATEGORY':
                     axios({
                         method: 'put',
-                        headers: {'Content-Type': 'application/json'},
+                        headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept", 'Content-Type': 'application/json'},
                         url: 'http://localhost:8080/product-category',
                         data: {
                             id: this.props.active_category.id,
@@ -228,6 +230,7 @@ class Header extends Component {
                         .catch(function (error) {
                             console.log(error);
                         });
+                    break;
             }
         }
     }

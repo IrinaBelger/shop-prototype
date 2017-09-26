@@ -19,8 +19,7 @@ class Home extends Component {
         return (
             <div>
                 <Products products={this.props.products}
-                      addProductToBasket={ (e) => {this.addProductToBasket(e)  }}
-                      viewProduct={(e) => {this.viewProduct(e)}}/>
+                      addProductToBasket={ (e) => {this.addProductToBasket(e)  }}/>
             </div>
         );
     }

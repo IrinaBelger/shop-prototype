@@ -110,6 +110,7 @@ class SideBar extends Component {
                     }
                 });
                 self.fetchCategories();
+                self.fetchCategoryList();
                 self.navigateToPage();
             })
             .catch(function (error) {

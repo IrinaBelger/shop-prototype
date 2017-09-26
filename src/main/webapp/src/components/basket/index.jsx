@@ -23,7 +23,7 @@ const Basket = (props) => (
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
             {props.items.map((i, c)=>
-                <TableRow>
+                <TableRow key={i.id}>
                     <TableRowColumn>{c+1}</TableRowColumn>
                     <TableRowColumn>{i.model}</TableRowColumn>
                     <TableRowColumn>{i.price}</TableRowColumn>

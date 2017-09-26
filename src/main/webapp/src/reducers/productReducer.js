@@ -9,7 +9,13 @@ const initialState = {
         price: '',
         productTypeId: 0
     },
-    product: {}
+    product: {
+        productType:{
+            productCategory:{
+
+            }
+        }
+    }
 };
 
 export default function  productReducer(state = initialState, action) {

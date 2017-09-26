@@ -109,6 +109,75 @@ function DrawerRight(props) {
                                     )}
                                 </SelectField>
                             </div>
+                        case 'EDIT_PRODUCT':
+                            return <div>
+                                <TextField
+                                    onChange={(event, value) => props.onChangeModel(event, value)}
+                                    value={props.model}
+                                    floatingLabelText="Model"
+                                    multiLine={true}
+                                    rows={1}
+                                    style={textFieldStyle}
+                                    textareaStyle={textFieldStyle}
+                                    floatingLabelStyle={textFieldStyle}
+                                    floatingLabelFocusStyle={textFieldStyleFocused}
+                                    underlineFocusStyle={textFieldStyleFocused}
+                                />
+                                <TextField
+                                    onChange={(event, value) => props.onChangeDescription(event, value)}
+                                    floatingLabelText="Description"
+                                    value={props.description}
+                                    multiLine={true}
+                                    rows={1}
+                                    style={textFieldStyle}
+                                    textareaStyle={textFieldStyle}
+                                    floatingLabelStyle={textFieldStyle}
+                                    floatingLabelFocusStyle={textFieldStyleFocused}
+                                    underlineFocusStyle={textFieldStyleFocused}
+                                />
+                                <TextField
+                                    onChange={(event, value) => props.onChangePrice(event, value)}
+                                    floatingLabelText="Price"
+                                    value={props.price}
+                                    multiLine={true}
+                                    rows={1}
+                                    style={textFieldStyle}
+                                    textareaStyle={textFieldStyle}
+                                    floatingLabelStyle={textFieldStyle}
+                                    floatingLabelFocusStyle={textFieldStyleFocused}
+                                    underlineFocusStyle={textFieldStyleFocused}
+                                />
+                                <SelectField
+                                    floatingLabelText="Category"
+                                    style={textFieldStyle}
+                                    selectedMenuItemStyle={selectFieldStyleFocused}
+                                    textareaStyle={textFieldStyle}
+                                    labelStyle={textFieldStyle}
+                                    floatingLabelStyle={textFieldStyle}
+                                    floatingLabelFocusStyle={textFieldStyleFocused}
+                                    underlineFocusStyle={textFieldStyleFocused}
+                                    value={props.selectedCategory.id}
+                                    onChange={(event, index, value) => props.onChangeCategory(event, index, value)}>
+                                    {props.categoryList.map((c) =>
+                                        <MenuItem value={c.id} key={c.id} primaryText={c.name}/>
+                                    )}
+                                </SelectField>
+                                <SelectField
+                                    floatingLabelText="Type"
+                                    style={textFieldStyle}
+                                    selectedMenuItemStyle={selectFieldStyleFocused}
+                                    textareaStyle={textFieldStyle}
+                                    labelStyle={textFieldStyle}
+                                    floatingLabelStyle={textFieldStyle}
+                                    floatingLabelFocusStyle={textFieldStyleFocused}
+                                    underlineFocusStyle={textFieldStyleFocused}
+                                    value={props.selectedType.id}
+                                    onChange={(event, index, value) => props.onChangeType(event, index, value)}>
+                                    {props.types.map((c) =>
+                                        <MenuItem value={c.id} key={c.id} primaryText={c.name}/>
+                                    )}
+                                </SelectField>
+                            </div>
                         case 'ADD_CATEGORY':
                             return <div>
                                 <TextField
@@ -134,7 +203,8 @@ function DrawerRight(props) {
                                     underlineFocusStyle={textFieldStyleFocused}
                                 />
                             </div>
-                        case 'EDIT_CATEGORY','EDIT_TYPE' :
+                        case 'EDIT_CATEGORY':
+                        case 'EDIT_TYPE' :
                             return <div>
                                 <TextField
                                     onChange={(event, value) => props.onChangeName(event, value)}
