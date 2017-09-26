@@ -21,7 +21,6 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search_visible: false,
             toggle_open: false,
             active_type: '',
             openDrawer: false,
@@ -33,7 +32,6 @@ class Header extends Component {
 
     openDrawer() {
         this.setState({
-            search_visible: this.state.search_visible,
             toggle_open: this.state.toggle_open,
             active_type: this.state.active_type,
             openDrawer: !this.state.openDrawer,
@@ -236,14 +234,11 @@ class Header extends Component {
     }
 
     render() {
-        const searchClass = this.state.search_visible ? "open" : "";
         return (
             <div className="header">
                 <Card items={this.props.items}/>
                 <NavMenu delete={() => this.deleteActive()}
                          edit={() => this.editActive()}/>
-                <Search onClick={() => this.openSearch()}
-                        className={searchClass}/>
                 <DrawerRight
                     title={this.state.title}
                     active_type={this.state.active_type}
