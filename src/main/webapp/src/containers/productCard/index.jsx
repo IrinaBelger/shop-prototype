@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import DetailCard from '../../components/detailCard';
-import axios from 'axios';
 import DrawerRight from '../../components/drawer';
-import {setProduct, deleteProduct, saveProduct} from '../../actions/productActions'
+import {setProduct, deleteProduct, saveProduct, editProduct} from '../../actions/productActions'
 import {addProductToBasket, updateProductFromBasket} from '../../actions/basketActions'
 import {getCategories, getTypesByCategoryId, setType, setCategory} from '../../actions/categoryActions'
 
@@ -30,17 +29,9 @@ class ProductCard extends Component {
     };
 
     openDrawer() {
-        console.log('123');
         this.setState({
             openDrawer: !this.state.openDrawer,
             disableType: true
-        });
-    }
-
-    getCategories() {
-        axios.get('http://localhost:8080/product-category',
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onGetCategories(response.data);
         });
     }
 
@@ -51,12 +42,8 @@ class ProductCard extends Component {
             });
             this.props.onSetType(selectedType);
             this.setState({
-                openDrawer: this.state.openDrawer,
                 disableType: false,
                 product: {
-                    model: this.state.product.model,
-                    description: this.state.product.description,
-                    price: this.state.product.price,
                     productTypeId: selectedValue
                 }
             });
@@ -65,9 +52,7 @@ class ProductCard extends Component {
 
     setSelectedCategory(selectedValue) {
         this.setState({
-            openDrawer: this.state.openDrawer,
-            disableType: false,
-            product: this.state.product
+            disableType: false
         });
         this.props.onSetCategory(selectedValue);
     }
@@ -78,10 +63,6 @@ class ProductCard extends Component {
                 return el.id == category;
             });
             this.setSelectedCategory(selectedValue);
-            axios.get('http://localhost:8080/product-type/' + category,
-                {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-                this.props.onGetTypesByCategoryId(response.data);
-            });
         }
     }
 
@@ -90,31 +71,16 @@ class ProductCard extends Component {
                 this.state.product.price === '' ||
                 this.state.product.description === '' ||
                 this.state.product.productTypeId === 0)) {
-            let self = this;
-            axios({
-                method: 'put',
-                headers: {'Content-Type': 'application/json'},
-                url: 'http://localhost:8080/product/' + this.props.product.id,
-                data: this.state.product
-            })
-            .then(response => {
-                console.log(response);
-                let copyOldProduct = self.props.product;
-                self.props.onUpdateProductFromBasket(response.data);
-                self.props.onSetProduct(response.data);
-                self.setState({
-                    openDrawer: false,
-                    disableType: true,
-                    product: {
-                        model: '',
-                        description: '',
-                        price: '',
-                        productTypeId: 0
-                    }
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
+            this.props.onEditProduct(this.props.product.id, this.state.product,this.props.editedProduct);
+            this.setState({
+                openDrawer: false,
+                disableType: true,
+                product: {
+                    model: '',
+                    description: '',
+                    price: '',
+                    productTypeId: 0
+                }
             });
         }
 
@@ -122,49 +88,34 @@ class ProductCard extends Component {
 
     onChangeModel(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: value,
-                description: this.state.product.description,
-                price: this.state.product.price,
-                productTypeId: this.state.product.productTypeId
+                model: value
             }
         });
     }
 
     onChangeDescription(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: this.state.product.model,
-                description: value,
-                price: this.state.product.price,
-                productTypeId: this.state.product.productTypeId
+                description: value
             }
         });
     }
 
     onChangePrice(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: this.state.product.model,
-                description: this.state.product.description,
-                price: value,
-                productTypeId: this.state.product.productTypeId
+                price: value
             }
         });
     }
 
 
     getProduct(productId) {
-        axios.get('http://localhost:8080/product/getById/' + productId,
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onSetProduct(response.data);
-        });
+        this.props.onSetProduct(productId);
     }
 
     addProductToBasket() {
@@ -174,13 +125,9 @@ class ProductCard extends Component {
     }
 
     deleteProduct() {
-        let self = this;
         let productCopy = this.props.product;
-        axios.delete('http://localhost:8080/product/' + this.props.product.id,
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            self.navigateToPage();
-            this.props.deleteProduct(productCopy)
-        });
+        this.props.deleteProduct(this.props.product.id,productCopy)
+        this.navigateToPage();
     }
 
     editProduct() {
@@ -240,7 +187,8 @@ export default connect(
         types: state.categoryReducer.types,
         category: state.categoryReducer.category,
         type: state.categoryReducer.type,
-        active_type: state.categoryReducer.active_type
+        active_type: state.categoryReducer.active_type,
+        editedProduct: state.productReducer.editedProduct
     }),
     dispatch => ({
         onSetProduct: (product) => {
@@ -252,23 +200,29 @@ export default connect(
         onUpdateProductFromBasket: (product) => {
             dispatch(updateProductFromBasket(product))
         },
-        deleteProduct: (product) => {
-            dispatch(deleteProduct(product))
+        deleteProduct: (productId, product) => {
+            dispatch(deleteProduct(productId, product))
         },
-        onGetTypesByCategoryId: (types) => {
-            dispatch(getTypesByCategoryId(types));
+        onGetTypesByCategoryId: (categoryId) => {
+            dispatch(getTypesByCategoryId(categoryId));
         },
-        onGetCategories: (categoryList) => {
-            dispatch(getCategories(categoryList));
+        onGetCategories: () => {
+            dispatch(getCategories());
         },
         onSetType: (type) => {
             dispatch(setType(type));
         },
         onSetCategory: (category) => {
             dispatch(setCategory(category));
+            dispatch(getTypesByCategoryId(category.id));
         },
         onSaveProduct: (product) => {
             dispatch(saveProduct(product))
+        },
+        onEditProduct: (product_id, product, editedProduct) => {
+            dispatch(editProduct(product_id, product));
+            dispatch(updateProductFromBasket(editedProduct));
+            dispatch(setProduct(editedProduct));
         }
     })
 )(ProductCard);

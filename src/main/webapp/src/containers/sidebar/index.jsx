@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ListView from '../../components/listView';
-import axios from 'axios';
-import {fetchCategories, setActiveType, setActiveCategory, getCategories, clearActiveType} from '../../actions/categoryActions'
+import {fetchCategories, setActiveType, setActiveCategory, getCategories, clearActiveType, createCategory} from '../../actions/categoryActions'
 import {fetchProducts, clearProducts} from '../../actions/productActions'
 import DrawerRight from '../../components/drawer';
 
@@ -16,27 +15,12 @@ class SideBar extends Component {
                 types: ''
             }
         };
-        this.fetchCategories();
-        this.fetchCategoryList();
+        this.props.onFetchCategories();
     }
 
     navigateToPage = () => {
         this.context.router.push('/')
     };
-
-    fetchCategoryList() {
-        axios.get('http://localhost:8080/product-category',
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onGetCategoryList(response.data);
-        });
-    }
-
-    fetchCategories() {
-        axios.get('http://localhost:8080/product-category/map',
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onFetchCategories(response.data);
-        });
-    }
 
     openDrawer() {
         this.setState({
@@ -45,13 +29,8 @@ class SideBar extends Component {
     }
 
     onSelectType(id) {
-        let self = this;
         this.props.onSetActiveType(id);
-        axios.get('http://localhost:8080/product/' + id,
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onFetchProducts(response.data);
-            self.navigateToPage();
-        });
+        this.navigateToPage();
     }
 
     onSelectCategory(category){
@@ -60,8 +39,6 @@ class SideBar extends Component {
                 return element;
             }
         });
-        this.props.onClearActiveType({});
-        this.props.onClearProducts([]);
         this.props.onSetActiveCategory(active_category)
     }
     onAddCategory() {
@@ -82,7 +59,6 @@ class SideBar extends Component {
 
     onChangeTypesName(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             category: {
                 name: this.state.category.name,
                 types: value
@@ -93,29 +69,15 @@ class SideBar extends Component {
     onSave() {
         if (!(this.state.category.name === '' ||
                 this.state.category.types === '')) {
-            let self = this;
-            axios({
-                method: 'post',
-                headers: {'Content-Type': 'application/json'},
-                url: 'http://localhost:8080/product-category',
-                data: this.state.category
-            })
-            .then(response => {
-                console.log(response);
-                self.setState({
-                    openDrawer: false,
-                    category: {
-                        name: '',
-                        types: ''
-                    }
-                });
-                self.fetchCategories();
-                self.fetchCategoryList();
-                self.navigateToPage();
-            })
-            .catch(function (error) {
-                console.log(error);
+            this.props.onCreateCategory(this.state.category);
+            this.setState({
+                openDrawer: false,
+                category: {
+                    name: '',
+                    types: ''
+                }
             });
+            this.navigateToPage();
         }
     }
 
@@ -154,23 +116,31 @@ export default connect(
         categoryList: state.categoryReducer.categoryList
     }),
     dispatch => ({
-        onFetchCategories: (categories) => {
-            dispatch(fetchCategories(categories));
+        onFetchCategories: () => {
+            dispatch(fetchCategories());
+            dispatch(getCategories());
         },
-        onGetCategoryList: (categoryList) => {
-            dispatch(getCategories(categoryList));
+        onCreateCategory: (category) => {
+            dispatch(createCategory(category));
+            dispatch(fetchCategories());
+        },
+        onGetCategoryList: () => {
+            dispatch(getCategories());
         },
         onSetActiveType: (active_type) => {
             dispatch(setActiveType(active_type));
         },
-        onFetchProducts: (products) => {
-            dispatch(fetchProducts(products));
+        onFetchProducts: (id) => {
+            dispatch(fetchProducts(id));
         },
         onSetActiveCategory: (active_category) => {
+            dispatch(clearActiveType([]));
+            dispatch(clearProducts([]));
             dispatch(setActiveCategory(active_category));
         },
         onClearActiveType: (active_type) => {
             dispatch(clearActiveType(active_type));
+            dispatch(fetchProducts(active_type));
         },
         onClearProducts: (products) => {
             dispatch(clearProducts(products));

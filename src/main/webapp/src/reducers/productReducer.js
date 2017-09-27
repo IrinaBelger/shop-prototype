@@ -1,8 +1,10 @@
 /**
  * Created by Irina Kazantseva on 21.09.2017.
  */
+import * as actionTypes from '../constans/actionTypes'
 const initialState = {
     products: [],
+    editedProduct: {},
     newProduct:{
         model: '',
         description: '',
@@ -20,17 +22,17 @@ const initialState = {
 
 export default function  productReducer(state = initialState, action) {
     switch(action.type){
-        case 'CLEAR_PRODUCTS':
+        case actionTypes.CLEAR_PRODUCTS:
             return { ...state, products: []};
-        case 'SAVE_PRODUCT':
-            return { ...state, products: [...state.products, action.payload]};
-        case 'FETCH_PRODUCTS':
+        case actionTypes.FETCH_PRODUCTS:
             return { ...state, products: action.payload};
-        case 'EDIT_NEW_PRODUCT':
+        case actionTypes.EDIT_NEW_PRODUCT:
             return { ...state, newProduct: action.payload};
-        case 'SET_PRODUCT':
+        case actionTypes.EDIT_PRODUCT:
+            return { ...state, editedProduct: action.payload};
+        case actionTypes.SET_PRODUCT:
             return { ...state, product: action.payload};
-        case 'DELETE_PRODUCT':
+        case actionTypes.DELETE_PRODUCT:
             return { ...state, products:
                 state.products.filter(function(product){
                     return product.id !== action.payload.id;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Basket from '../../components/basket';
-import IconButton from '../../components/button';
 import {fetchBasket, countCost, deleteProductFromBasket} from '../../actions/basketActions'
 
 

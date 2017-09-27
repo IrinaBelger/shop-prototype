@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
-import axios from 'axios';
-
 import IconButton from '../../components/button';
 import Home from '../home';
 import DrawerRight from '../../components/drawer';
@@ -28,29 +26,19 @@ class Content extends Component {
                 productTypeId: 0
             }
         };
-        this.getCategories();
+        this.props.onGetCategories();
     }
 
     openDrawer() {
-        console.log('123');
         this.setState({
             openDrawer: !this.state.openDrawer,
             disableType: true
         });
     }
 
-    getCategories() {
-        axios.get('http://localhost:8080/product-category',
-            {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-            this.props.onGetCategories(response.data);
-        });
-    }
-
     setSelectedCategory(selectedValue) {
         this.setState({
-            openDrawer: this.state.openDrawer,
-            disableType: false,
-            product: this.state.product
+            disableType: false
         });
         this.props.onSetCategory(selectedValue);
     }
@@ -62,28 +50,20 @@ class Content extends Component {
             });
             this.props.onSetType(selectedType);
             this.setState({
-                openDrawer: this.state.openDrawer,
                 disableType: false,
                 product: {
-                    model: this.state.product.model,
-                    description: this.state.product.description,
-                    price: this.state.product.price,
                     productTypeId: selectedValue
                 }
             });
         }
     }
 
-    getTypesByCategoryId(event, index, category) {
-        if (!(category === null)) {
+    getTypesByCategoryId(event, index, categoryId) {
+        if (!(categoryId === null)) {
             let selectedValue = this.props.categoryList.find(function (el) {
-                return el.id == category;
+                return el.id == categoryId;
             });
             this.setSelectedCategory(selectedValue);
-            axios.get('http://localhost:8080/product-type/' + category,
-                {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-                this.props.onGetTypesByCategoryId(response.data);
-            });
         }
     }
 
@@ -92,72 +72,45 @@ class Content extends Component {
                 this.state.product.price === '' ||
                 this.state.product.description === '' ||
                 this.state.product.productTypeId === 0)) {
-            let self = this;
-            axios({
-                method: 'post',
-                headers: {'Content-Type': 'application/json'},
-                url: 'http://localhost:8080/product',
-                data: this.state.product
-            })
-                .then(response => {
-                    console.log(response);
-                    if(Object.keys(self.props.active_type).length > 0 && self.props.active_type.id === self.state.product.productTypeId){
-                        self.props.onSaveProduct(response.data);
-                    }
-                    self.setState({
-                        openDrawer: false,
-                        disableType: true,
-                        disabledButton: true,
-                        product: {
-                            model: '',
-                            description: '',
-                            price: '',
-                            productTypeId: 0
-                        }
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            this.onSaveProduct(this.state.product);
+            this.setState({
+                openDrawer: false,
+                disableType: true,
+                disabledButton: true,
+                product: {
+                    model: '',
+                    description: '',
+                    price: '',
+                    productTypeId: 0
+                }
+            });
         }
 
     }
 
     onChangeModel(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: value,
-                description: this.state.product.description,
-                price: this.state.product.price,
-                productTypeId: this.state.product.productTypeId
+                model: value
             }
         });
     }
 
     onChangeDescription(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: this.state.product.model,
-                description: value,
-                price: this.state.product.price,
-                productTypeId: this.state.product.productTypeId
+                description: value
             }
         });
     }
 
     onChangePrice(event, value) {
         this.setState({
-            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: this.state.product.model,
-                description: this.state.product.description,
-                price: value,
-                productTypeId: this.state.product.productTypeId
+                price: value
             }
         });
     }
@@ -207,17 +160,18 @@ export default connect(
         active_type: state.categoryReducer.active_type
     }),
     dispatch => ({
-        onGetTypesByCategoryId: (types) => {
-            dispatch(getTypesByCategoryId(types));
+        onGetTypesByCategoryId: (categoryId) => {
+            dispatch(getTypesByCategoryId(categoryId));
         },
-        onGetCategories: (categoryList) => {
-            dispatch(getCategories(categoryList));
+        onGetCategories: () => {
+            dispatch(getCategories());
         },
         onSetType: (type) => {
             dispatch(setType(type));
         },
         onSetCategory: (category) => {
             dispatch(setCategory(category));
+            dispatch(getTypesByCategoryId(category.id));
         },
         onSaveProduct: (product) => {
             dispatch(saveProduct(product))

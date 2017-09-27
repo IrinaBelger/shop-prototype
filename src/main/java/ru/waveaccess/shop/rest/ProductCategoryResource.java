@@ -42,10 +42,9 @@ public class ProductCategoryResource {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveProductCategory(@RequestBody ProductCategoryDto productCategoryDto) {
+    public ProductCategory saveProductCategory(@RequestBody ProductCategoryDto productCategoryDto) {
         ProductCategory productCategory = new ProductCategory();
         productCategory.setName(productCategoryDto.getName());
-
         productCategory = productCategoryService.save(productCategory);
         String[] types = productCategoryDto.types.split(",");
         for(String type : types){
@@ -54,6 +53,7 @@ public class ProductCategoryResource {
             productType.setProductCategory(productCategory);
             productTypeService.save(productType);
         }
+        return productCategory;
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
