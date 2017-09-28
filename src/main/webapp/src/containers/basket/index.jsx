@@ -36,7 +36,7 @@ export default connect(
             dispatch(countCost());
         },
         onDeleteProductFromBasket: (product) => {
-            dispatch(deleteProductFromBasket(product));
+            dispatch(deleteProductFromBasket(product.id, product));
         },
     })
 )(BasketPage);

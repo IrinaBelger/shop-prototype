@@ -3,6 +3,7 @@
  */
 
 import * as actionTypes from '../constans/actionTypes'
+import {updateProductFromBasket} from "./basketActions"
 import axios from 'axios';
 
 export const fetchProducts = (id) => dispatch => {
@@ -27,14 +28,16 @@ export const editNewProduct = (product) => dispatch => {
     dispatch({type: actionTypes.EDIT_NEW_PRODUCT, payload: product})
 };
 
-export const editProduct = (product_id, product) => dispatch => {
+export const editProduct = (product_id, product,editedProduct) => dispatch => {
     axios({
         method: 'put',
         headers: {'Content-Type': 'application/json'},
         url: 'http://localhost:8080/product/' + product_id,
         data: product
     }).then(response => {
-            dispatch({type: actionTypes.EDIT_PRODUCT, payload: response.data})
+        dispatch({type: actionTypes.EDIT_PRODUCT, payload: response.data});
+        dispatch(updateProductFromBasket(editedProduct));
+        dispatch(setProduct(editedProduct));
     })
 };
 

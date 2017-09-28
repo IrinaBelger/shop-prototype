@@ -15,13 +15,13 @@ class ProductCard extends Component {
             openDrawer: false,
             disableType: true,
             product: {
-                model: '',
-                description: '',
-                price: '',
-                productTypeId: 0
+                model: this.props.product.model,
+                description: this.props.product.description,
+                price: this.props.product.price,
+                productTypeId: this.props.product.productType.id
             }
         };
-        this.getCategories();
+        this.props.onGetCategories();
     }
 
     navigateToPage = () => {
@@ -31,7 +31,8 @@ class ProductCard extends Component {
     openDrawer() {
         this.setState({
             openDrawer: !this.state.openDrawer,
-            disableType: true
+            disableType: true,
+            product: this.state.product
         });
     }
 
@@ -42,8 +43,12 @@ class ProductCard extends Component {
             });
             this.props.onSetType(selectedType);
             this.setState({
+                openDrawer: this.state.openDrawer,
                 disableType: false,
                 product: {
+                    model: this.state.product.model,
+                    description: this.state.product.description,
+                    price: this.state.product.price,
                     productTypeId: selectedValue
                 }
             });
@@ -52,7 +57,9 @@ class ProductCard extends Component {
 
     setSelectedCategory(selectedValue) {
         this.setState({
-            disableType: false
+            openDrawer: this.state.openDrawer,
+            disableType: false,
+            product: this.state.product
         });
         this.props.onSetCategory(selectedValue);
     }
@@ -90,7 +97,10 @@ class ProductCard extends Component {
         this.setState({
             disableType: false,
             product: {
-                model: value
+                model: value,
+                description: this.state.product.description,
+                price: this.state.product.price,
+                productTypeId: this.state.product.productTypeId
             }
         });
     }
@@ -98,8 +108,12 @@ class ProductCard extends Component {
     onChangeDescription(event, value) {
         this.setState({
             disableType: false,
+            openDrawer: this.state.openDrawer,
             product: {
-                description: value
+                description: value,
+                model: this.state.product.model,
+                price: this.state.product.price,
+                productTypeId: this.state.product.productTypeId
             }
         });
     }
@@ -107,8 +121,12 @@ class ProductCard extends Component {
     onChangePrice(event, value) {
         this.setState({
             disableType: false,
+            openDrawer: this.state.openDrawer,
             product: {
-                price: value
+                price: value,
+                description: this.state.product.description,
+                model: this.state.product.model,
+                productTypeId: this.state.product.productTypeId
             }
         });
     }
@@ -214,15 +232,13 @@ export default connect(
         },
         onSetCategory: (category) => {
             dispatch(setCategory(category));
-            dispatch(getTypesByCategoryId(category.id));
         },
         onSaveProduct: (product) => {
             dispatch(saveProduct(product))
         },
         onEditProduct: (product_id, product, editedProduct) => {
-            dispatch(editProduct(product_id, product));
-            dispatch(updateProductFromBasket(editedProduct));
-            dispatch(setProduct(editedProduct));
+            dispatch(editProduct(product_id, product, editedProduct));
+
         }
     })
 )(ProductCard);

@@ -32,13 +32,16 @@ class Content extends Component {
     openDrawer() {
         this.setState({
             openDrawer: !this.state.openDrawer,
-            disableType: true
+            disableType: true,
+            product: this.state.product
         });
     }
 
     setSelectedCategory(selectedValue) {
         this.setState({
-            disableType: false
+            openDrawer: this.state.openDrawer,
+            disableType: false,
+            product: this.state.product
         });
         this.props.onSetCategory(selectedValue);
     }
@@ -50,8 +53,12 @@ class Content extends Component {
             });
             this.props.onSetType(selectedType);
             this.setState({
+                openDrawer: this.state.openDrawer,
                 disableType: false,
                 product: {
+                    model: this.state.product.model,
+                    description: this.state.product.description,
+                    price: this.state.product.price,
                     productTypeId: selectedValue
                 }
             });
@@ -90,27 +97,39 @@ class Content extends Component {
 
     onChangeModel(event, value) {
         this.setState({
+            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                model: value
+                model: value,
+                description: this.state.product.description,
+                price: this.state.product.price,
+                productTypeId: this.state.product.productTypeId
             }
         });
     }
 
     onChangeDescription(event, value) {
         this.setState({
+            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                description: value
+                model: this.state.product.model,
+                description: value,
+                price: this.state.product.price,
+                productTypeId: this.state.product.productTypeId
             }
         });
     }
 
     onChangePrice(event, value) {
         this.setState({
+            openDrawer: this.state.openDrawer,
             disableType: false,
             product: {
-                price: value
+                model: this.state.product.model,
+                description: this.state.product.description,
+                price: value,
+                productTypeId: this.state.product.productTypeId
             }
         });
     }
@@ -171,7 +190,6 @@ export default connect(
         },
         onSetCategory: (category) => {
             dispatch(setCategory(category));
-            dispatch(getTypesByCategoryId(category.id));
         },
         onSaveProduct: (product) => {
             dispatch(saveProduct(product))

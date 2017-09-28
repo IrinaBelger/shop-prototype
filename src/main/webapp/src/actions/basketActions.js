@@ -21,7 +21,7 @@ export const countCost = () => dispatch => {
 export const deleteProductFromBasket = (id, product) => dispatch => {
     axios.get('http://localhost:8080/product/getProductStatus/'+id,
         {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}}).then(response => {
-        if(!response.data){
+        if(response.data){
             dispatch({ type: actionTypes.DELETE_PRODUCT_FROM_BASKET, payload: product })
         }
     });

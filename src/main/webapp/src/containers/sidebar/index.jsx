@@ -122,13 +122,14 @@ export default connect(
         },
         onCreateCategory: (category) => {
             dispatch(createCategory(category));
-            dispatch(fetchCategories());
+
         },
         onGetCategoryList: () => {
             dispatch(getCategories());
         },
         onSetActiveType: (active_type) => {
             dispatch(setActiveType(active_type));
+            dispatch(fetchProducts(active_type));
         },
         onFetchProducts: (id) => {
             dispatch(fetchProducts(id));
@@ -140,7 +141,6 @@ export default connect(
         },
         onClearActiveType: (active_type) => {
             dispatch(clearActiveType(active_type));
-            dispatch(fetchProducts(active_type));
         },
         onClearProducts: (products) => {
             dispatch(clearProducts(products));

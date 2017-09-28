@@ -29,7 +29,12 @@ class Header extends Component {
 
     openDrawer() {
         this.setState({
-            openDrawer: !this.state.openDrawer
+            toggle_open: this.state.toggle_open,
+            active_type: this.state.active_type,
+            openDrawer: !this.state.openDrawer,
+            title: this.state.title,
+            categoryName: this.state.categoryName,
+            typeName: this.state.typeName
         });
     }
 
@@ -44,17 +49,25 @@ class Header extends Component {
         } else {
             if (Object.keys(this.props.active_type).length === 0 && !(Object.keys(this.props.active_category).length === 0)) {
                 this.setState({
+                    search_visible: this.state.search_visible,
+                    toggle_open: this.state.toggle_open,
                     active_type: 'EDIT_CATEGORY',
                     openDrawer: true,
-                    title: 'Edit category'
+                    title: 'Edit category',
+                    categoryName: this.state.categoryName,
+                    typeName: this.state.typeName
                 });
 
             } else {
                 if (!(Object.keys(this.props.active_type).length === 0) && !(Object.keys(this.props.active_category).length === 0)) {
                     this.setState({
+                        search_visible: this.state.search_visible,
+                        toggle_open: this.state.toggle_open,
                         active_type: 'EDIT_TYPE',
                         openDrawer: true,
-                        title: 'Edit type'
+                        title: 'Edit type',
+                        categoryName: this.state.categoryName,
+                        typeName: this.state.typeName
                     });
                 }
             }
@@ -81,12 +94,24 @@ class Header extends Component {
             switch (this.state.active_type) {
                 case 'EDIT_TYPE':
                     this.setState({
+                        search_visible: this.state.search_visible,
+                        toggle_open: this.state.toggle_open,
+                        active_type: this.state.active_type,
+                        openDrawer: this.state.openDrawer,
+                        title: this.state.title,
+                        categoryName: this.state.categoryName,
                         typeName: value
                     });
                     break;
                 case 'EDIT_CATEGORY':
                     this.setState({
-                        categoryName: value
+                        search_visible: this.state.search_visible,
+                        toggle_open: this.state.toggle_open,
+                        active_type: this.state.active_type,
+                        openDrawer: this.state.openDrawer,
+                        title: this.state.title,
+                        categoryName: value,
+                        typeName: this.state.typeName
                     });
                     break;
 
@@ -166,22 +191,19 @@ export default connect(
         },
         onEditActiveType: (active_type_id, active_type_name) => {
             dispatch(editActiveType(active_type_id, active_type_name));
-            dispatch(fetchCategories());
+
         },
         onEditActiveCategory: (active_category_id, active_category_name) => {
             dispatch(editActiveCategory(active_category_id, active_category_name));
-            dispatch(fetchCategories());
-            dispatch(getCategories());
         },
         onDeleteActiveType: (active_type_id, active_type) => {
             dispatch(deleteActiveType(active_type_id,active_type));
-            dispatch(fetchCategories());
             dispatch(clearProducts([]));
         },
         onDeleteActiveCategory: (active_category_id, active_category) => {
-            dispatch(deleteActiveCategory(active_category_id, active_category));
-            dispatch(fetchCategories());
             dispatch(clearProducts([]));
+            dispatch(deleteActiveCategory(active_category_id, active_category));
+
         },
         onClearProducts: (products) => {
             dispatch(clearProducts(products));
